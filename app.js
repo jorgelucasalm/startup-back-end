@@ -1,9 +1,7 @@
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
-
-import { cadastro_pet, cadastro_responsavel } from './routes/cadastro.js'
-import { listarAgenda, nova_consulta } from './routes/agendamento.js'
+import { listarStartup, consultarStartup } from './routes/serviceStartup.js'
 
 const PORT = 3000
 const app = express()
@@ -19,13 +17,16 @@ app.get('/', (req, res) => {
     })
 });
 
-app.get('/agendas', async (req, res) => {
-    listarAgenda((e) => { return res.json(e) })
+app.get('/startups', async (req, res) => {
+    listarStartup((e) => { return res.json(e) })
 })
 
-app.use('/cadastro-responsavel', cadastro_responsavel)
-app.use('/cadastro-pet', cadastro_pet)
-app.use('/nova-consulta', nova_consulta)
+app.get('/startups/:id', async (req, res) => {
+    const { id } = req.params
+    consultarStartup(id, (e) => { return res.json(e) })
+})
+
+// app.use('/cadastro-responsavel', cadastro_responsavel)
 
 
 app.use(async (req, rest, next) => {
