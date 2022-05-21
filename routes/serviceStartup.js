@@ -17,3 +17,39 @@ export const consultarStartup = async (id, callback) => {
         }
     })
 }
+
+export const criarStartup = async (req, res) => {
+    const { nome, sede } = req.body
+    console.log(nome, sede)
+    const query = `insert into startup values (default, '${nome}', '${sede}');`
+    db.connect(() => {
+        db.query(query)
+    })
+    res.status(200).end()
+}
+
+export const removerStartup = async (req, res) => {
+    const { id } = req.params
+    const query = `delete from startup where id_startup = ${id};`
+    db.connect(() => {
+        db.query(query)
+    })
+    res.status(200).end()
+}
+
+export const atualizarStartup = async (req, res) => {
+    const { id, nome, sede } = req.body
+    const query = `UPDATE startup SET nome_startup = "${nome}", cidade_sede = "${sede}" WHERE id_startup = ${id};`
+    db.connect(() => {
+        db.query(query)
+    })
+    res.status(200).end()
+}
+
+export const cadastro_responsavel = async (req, res) => {
+    const { nome, nick, cpf, endereco, telefone, email, senha, email_recuperacao } = req.body
+    db.connect(() => {
+        db.query(query)
+    })
+    res.status(200).end()
+}

@@ -1,9 +1,9 @@
 import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
-import { listarStartup, consultarStartup } from './routes/serviceStartup.js'
+import { listarStartup, consultarStartup, criarStartup, removerStartup, atualizarStartup } from './routes/serviceStartup.js'
 
-const PORT = 3000
+const PORT = 8080
 const app = express()
 
 app.use(cors())
@@ -20,6 +20,12 @@ app.get('/', (req, res) => {
 app.get('/startups', async (req, res) => {
     listarStartup((e) => { return res.json(e) })
 })
+
+app.use('/create-startups', criarStartup)
+
+app.use('/remove-startups/:id', removerStartup)
+
+app.use('/update-startups', atualizarStartup)
 
 app.get('/startups/:id', async (req, res) => {
     const { id } = req.params
