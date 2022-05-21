@@ -49,10 +49,20 @@ export const getLinguagem = async (id, callback) => {
 }
 
 export const getAllLinguagem = async (callback) => {
-    const query = `select nome_linguagem from linguagem_programacao;`
+    const query = `select nome_linguagem, id_linguagem from linguagem_programacao;`
     db.query(query, (err, results, fields) => {
         if (callback != null) {
             callback(results)
         }
     })
+}
+
+
+export const adicionarLinguagemProgramador = async (req, res) => {
+    const { id_p, id_l } = req.body
+    const query = `insert into linguagem_programacao value (${id_p},${id_l});`
+    db.connect(() => {
+        db.query(query)
+    })
+    res.status(200).end()
 }

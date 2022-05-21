@@ -2,7 +2,7 @@ import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import { listarStartup, consultarStartup, criarStartup, removerStartup, atualizarStartup } from './routes/serviceStartup.js'
-import { getAllLinguagem, consultarFuncionario, criarFuncionario, removerFuncionario, atualizarFuncionario, getLinguagem } from './routes/serviceFuncionario.js'
+import { adicionarLinguagemProgramador, getAllLinguagem, consultarFuncionario, criarFuncionario, removerFuncionario, atualizarFuncionario, getLinguagem } from './routes/serviceFuncionario.js'
 
 const PORT = 8080
 const app = express()
@@ -65,6 +65,7 @@ app.get('/listar-linguagem', async (req, res) => {
 
 
 
+app.use('/create-linguagem-programador', adicionarLinguagemProgramador)
 
 app.use(async (req, rest, next) => {
     const erro = new Error('Não encontrado');
