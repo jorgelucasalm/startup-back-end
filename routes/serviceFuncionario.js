@@ -36,10 +36,23 @@ export const atualizarFuncionario = async (req, res) => {
     res.status(200).end()
 }
 
-export const cadastro_responsavel = async (req, res) => {
-    const { nome, nick, cpf, endereco, telefone, email, senha, email_recuperacao } = req.body
-    db.connect(() => {
-        db.query(query)
+export const getLinguagem = async (id, callback) => {
+    const query = `SELECT lp.nome_linguagem FROM startups.programador_linguagem as pl
+    join programador as p on p.id_programador = pl.id_programador
+    join linguagem_programacao as lp on lp.id_linguagem = pl.id_linguagem
+    where p.id_programador = ${id};`
+    db.query(query, (err, results, fields) => {
+        if (callback != null) {
+            callback(results)
+        }
     })
-    res.status(200).end()
+}
+
+export const getAllLinguagem = async (callback) => {
+    const query = `select nome_linguagem from linguagem_programacao;`
+    db.query(query, (err, results, fields) => {
+        if (callback != null) {
+            callback(results)
+        }
+    })
 }

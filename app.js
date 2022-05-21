@@ -2,7 +2,7 @@ import express from 'express'
 import morgan from 'morgan'
 import cors from 'cors'
 import { listarStartup, consultarStartup, criarStartup, removerStartup, atualizarStartup } from './routes/serviceStartup.js'
-import { consultarFuncionario, criarFuncionario, removerFuncionario, atualizarFuncionario } from './routes/serviceFuncionario.js'
+import { getAllLinguagem, consultarFuncionario, criarFuncionario, removerFuncionario, atualizarFuncionario, getLinguagem } from './routes/serviceFuncionario.js'
 
 const PORT = 8080
 const app = express()
@@ -43,9 +43,27 @@ app.get('/funcionario/:id', async (req, res) => {
     consultarFuncionario(id, (e) => { return res.json(e) })
 })
 
+app.get('/funcionario', async (req, res) => {
+    const { id } = req.params
+    console.log(id)
+    consultarFuncionario(id, (e) => { return res.json(e) })
+})
+
 app.delete('/remove-programador/:id', removerFuncionario)
 
 app.put('/update-programador/', atualizarFuncionario)
+
+app.get('/linguagem/:id', async (req, res) => {
+    const { id } = req.params
+    console.log(id)
+    getLinguagem(id, (e) => { return res.json(e) })
+})
+
+app.get('/listar-linguagem', async (req, res) => {
+    getAllLinguagem((e) => { return res.json(e) })
+})
+
+
 
 
 app.use(async (req, rest, next) => {
