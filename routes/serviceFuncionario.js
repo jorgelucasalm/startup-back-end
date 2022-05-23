@@ -11,11 +11,14 @@ export const consultarFuncionario = async (id, callback) => {
 
 export const criarFuncionario = async (req, res) => {
     const { nome, id_s, genero, data_nascimento, email } = req.body
+    var msgError
     const query = `insert into programador values (default, ${id_s}, '${nome}', '${genero}', '${data_nascimento}', "${email}");`
     db.connect(() => {
-        db.query(query)
+        // db.query(query, ((err) => res.json({ error: err.sqlMessage }).status(200).end()))
+        db.promise().query(query).then(() => {
+            res.status(200).json({ status: "ok" }).end()
+        }).catch((err) => res.status(409).json({ err: err.sqlMessage }))
     })
-    res.status(200).end()
 }
 
 export const removerFuncionario = async (req, res) => {

@@ -1,7 +1,7 @@
 import db from '../database/db.js'
 
 export const listarStartup = async (callback) => {
-    const query = `select * from startup;`
+    const query = `SELECT * FROM startup_info;`
     db.query(query, (err, results, fields) => {
         if (callback != null) {
             callback(results)
